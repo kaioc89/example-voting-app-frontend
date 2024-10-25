@@ -1,6 +1,7 @@
 # Etapa 1: Usar a imagem Node.js para build da aplicação Angular
 FROM node:18 AS build
 
+
 # Definir o diretório de trabalho no container
 WORKDIR /app
 
