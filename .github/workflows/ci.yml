@@ -1,0 +1,31 @@
+name: Publish to GitHub Packages
+
+on:
+  push:
+    branches:
+      - main  # Ou o nome da branch que você deseja usar para publicação
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'  # Ou a versão que você está usando
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the project
+        run: npm run build  # Ajuste conforme necessário
+
+      - name: Publish package
+        run: npm publish
+        env:
+          NODE_AUTHTOKEN: ${{ secrets.GITHUB_TOKEN }}  # Token de autenticação para publicar no GitHub Packages
