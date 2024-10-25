@@ -1,34 +1,32 @@
-name: Publish to GitHub Packages
+name: Publish Docker Image
 
 on:
   push:
     branches:
-      - main  # Ou o nome da branch que você deseja usar para publicação
+      - main  # Ou a branch que você deseja monitorar
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
         with:
-          node-version: '18'  # Ou a versão que você está usando
-          registry-url: 'https://npm.pkg.github.com'
+          registry: ghcr.io
+          username: ${{ github.actor }}  # Usuário do GitHub
+          token: ${{ secrets.GITHUB_TOKEN }}  # Token de autenticação
 
-      - name: Clean npm auth
-        run: rm -f ~/.npmrc  # Remove o arquivo .npmrc global se existir
+      - name: Build the Docker image
+        run: |
+          docker build . -t ghcr.io/${{ github.repository }}/voting-app-frontend:latest
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build the project
-        run: npm run build  # Ajuste conforme necessário
-
-      - name: Publish package
-        run: npm publish
-        env:
-          NODE_AUTHTOKEN: ${{ secrets.GITHUB_TOKEN }}  # Token de autenticação para publicar no GitHub Packages
+      - name: Push the Docker image
+        run: |
+          docker push ghcr.io/${{ github.repository }}/voting-app-frontend:latest
