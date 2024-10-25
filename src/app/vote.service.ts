@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { VoteOption } from './vote-option';
+import { ResultDto } from './result-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,9 @@ export class VoteService {
     private http: HttpClient
   ) { }
 
-  getResult(): Observable<any> {
+  getResult(): Observable<ResultDto> {
     const url = `${this.apiUrl}/vote`;
-    return this.http.get(url); // Especificando a interface VoteResult
+    return this.http.get<ResultDto>(url); // Especificando a interface VoteResult
   }
 
   sendVote(voteOption: VoteOption): Observable<any> {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VoteService } from '../../vote.service';
 import {MatCardModule} from '@angular/material/card';
+import { ResultDto } from '../../result-dto';
 
 @Component({
   selector: 'app-result',
@@ -13,7 +14,7 @@ import {MatCardModule} from '@angular/material/card';
 })
 export class ResultComponent implements OnInit{
 
-  result: Map<string, number> = new Map();
+  result!:ResultDto;
 
   constructor(
     private voteService: VoteService
