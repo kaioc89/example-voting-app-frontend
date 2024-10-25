@@ -15,6 +15,11 @@ export class VoteService {
     private http: HttpClient
   ) { }
 
+  getResult(): Observable<any>{
+    const url = `${this.apiUrl}/vote`;
+    return this.http.get(url);
+  }
+
   sendVote(voteOption: VoteOption): Observable<any> {
     // Corpo da requisição
     const body = { voteOption: voteOption };
