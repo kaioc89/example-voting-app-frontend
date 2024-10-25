@@ -19,6 +19,9 @@ jobs:
           node-version: '18'  # Ou a versão que você está usando
           registry-url: 'https://npm.pkg.github.com'
 
+      - name: Clean npm auth
+        run: rm -f ~/.npmrc  # Remove o arquivo .npmrc global se existir
+
       - name: Install dependencies
         run: npm install
 
