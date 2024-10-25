@@ -15,9 +15,9 @@ export class VoteService {
     private http: HttpClient
   ) { }
 
-  getResult(): Observable<any>{
+  getResult(): Observable<any> {
     const url = `${this.apiUrl}/vote`;
-    return this.http.get(url);
+    return this.http.get(url); // Especificando a interface VoteResult
   }
 
   sendVote(voteOption: VoteOption): Observable<any> {

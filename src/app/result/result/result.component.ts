@@ -13,7 +13,7 @@ import {MatCardModule} from '@angular/material/card';
 })
 export class ResultComponent implements OnInit{
 
-  response:String = ""
+  result: Map<string, number> = new Map();
 
   constructor(
     private voteService: VoteService
@@ -25,7 +25,8 @@ export class ResultComponent implements OnInit{
       this.voteService.getResult().subscribe({
         next: response =>{
           console.log(response);
-          this.response = response;
+          this.result = response;
+          console.log(this.result)
         }
       })
   }
